@@ -2,14 +2,14 @@ require 'sinatra/base'
 require 'active_support/core_ext/hash/indifferent_access'
 
 class Application
-  def self.run(component_class)
-    set_application(build_application(component_class))
+  def self.run(component_class, initial_state = nil)
+    set_application(build_application(component_class, initial_state))
     start_server
   end
 
-  def self.build_application(component_class)
+  def self.build_application(component_class, initial_state)
     continuations = ContinuationDictionary.new
-    session_store = SessionStore.new(component_class, continuations)
+    session_store = SessionStore.new(component_class, continuations, initial_state)
     instance = new(session_store)
     instance
   end

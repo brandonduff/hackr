@@ -6,10 +6,23 @@ ENV['APP_ENV'] = 'test'
 class ApplicationTest < Minitest::Test
   include Rack::Test::Methods
 
+  class InitialState
+    attr_accessor :count
+
+    def initialize
+      @count = 0
+    end
+
+    def increment
+      @count += 1
+    end
+  end
+
   class TestComponent < HtmlComponent
     attr_accessor :form_attr
 
-    def initialize
+    def initialize(initial_state)
+      @initial_state = initial_state
       @invoked = false
     end
 
@@ -22,6 +35,7 @@ class ApplicationTest < Minitest::Test
     end
 
     def render_content_on(html)
+      @initial_state.increment
       html.anchor(:invoke)
       html.paragraph("invoked: #{@invoked}")
       html.new_form
@@ -35,7 +49,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def setup
-    @application = Application.build_application(TestComponent)
+    @initial_state = InitialState.new
+    @application = Application.build_application(TestComponent, @initial_state)
     Application.set_application(@application)
     get '/' # initial render to register continuations
   end
@@ -78,6 +93,13 @@ class ApplicationTest < Minitest::Test
       get '/'
       refute_equal object_id, rendered_object_id
     end
+  end
+
+  def test_supplying_shared_state
+    with_session('new_session') do
+      get "/"
+    end
+    assert_equal 2, @initial_state.count
   end
 
   def rendered_object_id
