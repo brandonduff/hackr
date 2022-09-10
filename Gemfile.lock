@@ -33,6 +33,8 @@ GEM
     minitest (5.16.3)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
+    nokogiri (1.13.8-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.8-x86_64-darwin)
       racc (~> 1.4)
     public_suffix (5.0.0)
@@ -58,6 +60,7 @@ GEM
       nokogiri (~> 1.8)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
   x86_64-darwin-21
 
