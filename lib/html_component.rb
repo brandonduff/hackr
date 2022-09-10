@@ -15,7 +15,7 @@ class HtmlComponent
     if respond_to?(attribute)
       send(attribute)
     else
-      ''
+      ""
     end
   end
 end

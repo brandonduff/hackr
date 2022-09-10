@@ -1,5 +1,5 @@
-require 'sinatra/base'
-require 'active_support/core_ext/hash/indifferent_access'
+require "sinatra/base"
+require "active_support/core_ext/hash/indifferent_access"
 
 class Application
   def self.run(component_class, initial_state = nil)
@@ -10,8 +10,7 @@ class Application
   def self.build_application(component_class, initial_state)
     continuations = ContinuationDictionary.new
     session_store = SessionStore.new(component_class, continuations, initial_state)
-    instance = new(session_store)
-    instance
+    new(session_store)
   end
 
   def self.set_application(application)
@@ -26,8 +25,8 @@ class Application
     SinatraServer.run!
   end
 
-  def self.call(*params, &block)
-    SinatraServer.call(*params, &block)
+  def self.call(...)
+    SinatraServer.call(...)
   end
 
   def initialize(session_store)
@@ -51,24 +50,23 @@ class Application
   class SinatraServer < Sinatra::Base
     enable :sessions
 
-    get '/favicon.ico' do
-
+    get "/favicon.ico" do
     end
 
-    get '/:action' do
+    get "/:action" do
       application.invoke_action(params[:action])
-      redirect('/')
+      redirect("/")
     end
 
-    get '/' do
+    get "/" do
       session[:app_session_id] ||= application.session_store.new_session.id
       application.render(application.session_store.find(session[:app_session_id]))
     end
 
-    post '/:action' do
+    post "/:action" do
       transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
       application.invoke_action(transformed_params[:action], transformed_params.except(:action))
-      redirect('/')
+      redirect("/")
     end
 
     helpers do

@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class SessionStoreTest < Minitest::Test
   def component_factory

@@ -24,6 +24,6 @@ class Continuation
   end
 
   def notify_observers
-    @observer.update if @observer
+    @observer&.update
   end
 end

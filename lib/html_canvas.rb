@@ -7,13 +7,13 @@ class HtmlCanvas < Canvas
   define_tag :unordered_list, :ul
   define_tag :div
   define_tag :h1
-  define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
+  define_tag :stylesheet_link, :link, rel: :stylesheet, type: "text/css"
   define_tag :head
   define_tag :body
 
   def input(attribute, type)
     value = @registered_component.value_for(attribute)
-    HtmlNode.new('input', name: attribute.to_s, type: type, value: value).to_s(self)
+    HtmlNode.new("input", name: attribute.to_s, type: type, value: value).to_s(self)
   end
 
   def text(value)
@@ -25,6 +25,6 @@ class HtmlCanvas < Canvas
   end
 
   def buffer
-    @buffer ||= ''
+    @buffer ||= ""
   end
 end

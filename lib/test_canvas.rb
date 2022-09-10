@@ -57,16 +57,16 @@ class TestCanvas < Canvas
   end
 
   def inputs(name)
-    rendered[:input].find(-> { raise 'no input with that name' }) { |k, _v| k == name }[1]
+    rendered[:input].find(-> { raise "no input with that name" }) { |k, _v| k == name }[1]
   end
 
   def fill_in(input, value)
-    raise 'no form defined' unless @form_rendered
+    raise "no form defined" unless @form_rendered
     inputs(input) and (params[input] = value)
   end
 
   def submit
-    raise 'no submit button' if rendered[:submit_button].empty?
+    raise "no submit button" if rendered[:submit_button].empty?
     component.form_submission(params)
     clear
     render(component)
@@ -86,7 +86,7 @@ class TestCanvas < Canvas
   end
 
   def buffer
-    @buffer ||= ''
+    @buffer ||= ""
   end
 
   private

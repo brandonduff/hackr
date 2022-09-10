@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 class SessionStore
   attr_accessor :continuations

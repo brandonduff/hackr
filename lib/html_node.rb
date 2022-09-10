@@ -1,7 +1,7 @@
 class HtmlNode
-  attr_reader :buffer, :tag_name, :attributes, :inner
+  attr_reader :tag_name, :attributes, :inner
 
-  def initialize(tag_name, inner: '', **attributes)
+  def initialize(tag_name, inner: "", **attributes)
     @tag_name = tag_name
     @attributes = attributes
     @inner = inner

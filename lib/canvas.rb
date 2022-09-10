@@ -1,8 +1,8 @@
 class Canvas
   def self.define_tag(method_name, tag = method_name, **default_attributes, &definition_block)
-    define_method method_name do |inner_value="", **provided_attributes, &block|
+    define_method method_name do |inner_value = "", **provided_attributes, &block|
       HtmlNode.new(tag, inner: block || inner_value, **default_attributes, **provided_attributes).to_s(self)
-      instance_exec(**provided_attributes, &definition_block) if block_given?
+      instance_exec(**provided_attributes, &definition_block) if definition_block
     end
   end
 
@@ -23,21 +23,21 @@ class Canvas
   end
 
   def new_form(&block)
-    action = @continuation_dictionary.add(Continuation.new(@registered_component, 'form_submission'))
-    HtmlNode.new('form', action: action, method: 'post', inner: block).to_s(self)
+    action = @continuation_dictionary.add(Continuation.new(@registered_component, "form_submission"))
+    HtmlNode.new("form", action: action, method: "post", inner: block).to_s(self)
   end
 
   def anchor(symbol, &block)
     href = @continuation_dictionary.add(Continuation.new(@registered_component, block || symbol))
-    HtmlNode.new('a', inner: symbol.to_s, href: href).to_s(self)
+    HtmlNode.new("a", inner: symbol.to_s, href: href).to_s(self)
     href
   end
 
   def text_input(attribute)
-    input(attribute, 'text')
+    input(attribute, "text")
   end
 
   def date_input(attribute)
-    input(attribute, 'date')
+    input(attribute, "date")
   end
 end

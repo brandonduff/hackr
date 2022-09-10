@@ -8,4 +8,4 @@ require "html_canvas"
 require "text_node"
 require "html_node"
 require "session_store"
-require 'test_canvas'
+require "test_canvas"
