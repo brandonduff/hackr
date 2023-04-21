@@ -20,17 +20,6 @@ class ContinuationDictionaryTest < Minitest::Test
     assert_equal "first component attr", first_component.attr
   end
 
-  def test_observability
-    first_component = component_for_test
-    subject = ContinuationDictionary.new
-    subject.add_observer(self)
-    first_key = subject.add(Continuation.new(first_component, "form_submission"))
-
-    subject[first_key].call({})
-
-    assert @updated
-  end
-
   def test_adding_block
     component = component_for_test
     subject = ContinuationDictionary.new

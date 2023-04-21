@@ -6,11 +6,6 @@ class Continuation
 
   def call(*args)
     invoke(args)
-    notify_observers
-  end
-
-  def add_observer(observer)
-    @observer = observer
   end
 
   private
@@ -21,9 +16,5 @@ class Continuation
     else
       @component.send(@block_or_symbol, *args)
     end
-  end
-
-  def notify_observers
-    @observer&.update
   end
 end
